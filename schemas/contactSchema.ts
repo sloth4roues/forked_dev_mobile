@@ -9,14 +9,17 @@ export const contactSchema = z.object({
   email: z
     .string()
     .email("Adresse email invalide")
-    .refine((val) => val.endsWith("@ynov.com") || val.endsWith("@gmail.com")),
+    .refine(
+      (val) => val.endsWith("@ynov.com") || val.endsWith("@gmail.com"),
+      "Email autorisé : @ynov.com ou @gmail.com",
+    ),
   phone: z
     .string()
-    .optional()
     .refine(
-      (val) => !val || /^0[1-9]\d{8}$/.test(val),
+      (val) => !val || /^0[67]\d{8}$/.test(val),
       "Le numéro doit commencer par 06 ou 07",
-    ),
+    )
+    .optional(),
   role: z.enum(["Designer", "Developer", "Manager", "DevOps"], {
     error: () => "Sélectionnez un rôle valide",
   }),
